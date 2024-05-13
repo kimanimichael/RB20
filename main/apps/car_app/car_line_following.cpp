@@ -23,9 +23,15 @@ void carAppRun() {
         /* code */
         RB19Kinematics = drivingBoth;
         break;
+    case Infrared5Channel::detectedChannels::halfLeftChannel:
+        RB19Kinematics = drivingSlowRight;
+        break;
     case Infrared5Channel::detectedChannels::farLeftChannel:
         /* code */
         RB19Kinematics = drivingRight;
+        break;
+    case Infrared5Channel::detectedChannels::halfRightChannel:
+        RB19Kinematics = drivingSlowLeft;
         break;
     case Infrared5Channel::detectedChannels::farRightChannel:
         /* code */
