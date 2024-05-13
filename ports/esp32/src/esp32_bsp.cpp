@@ -10,16 +10,22 @@ namespace BSP {
 unsigned int BSPInit() {
     initSensors();
     initActuators();
-    vTaskDelay(5000/portTICK_PERIOD_MS);
-    getDefaultKinematicsLeftMotor()->set_speed(BSP::motorSpeeds::LOW);
-    vTaskDelay(5000/portTICK_PERIOD_MS);
-    getDefaultKinematicsLeftMotor()->set_speed(BSP::motorSpeeds::LOW);
+    // vTaskDelay(5000/portTICK_PERIOD_MS);
+    getDefaultKinematicsLeftMotor()->set_speed(BSP::motorSpeeds::ZERO);
+    // vTaskDelay(5000/portTICK_PERIOD_MS);
+    getDefaultKinematicsRightMotor()->set_speed(BSP::motorSpeeds::ZERO);
     return 0;
+}
+
+void BSP_Delay(unsigned int delay_ms) {
+    vTaskDelay(delay_ms/portTICK_PERIOD_MS);
 }
 
 void initActuators(){
     getDefaultKinematicsLeftMotor()->init();
+    getDefaultKinematicsLeftMotor()->stop();
     getDefaultKinematicsRightMotor()->init();
+    getDefaultKinematicsRightMotor()->stop();
     getDefaultSteeringMotor()->init();
 }
 
