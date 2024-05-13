@@ -13,6 +13,12 @@ namespace BSP{
 unsigned int BSPInit();
 
 /**
+ * @brief blocks current task
+ * @param delay_ms period in ms the task is blocked for
+*/
+void BSP_Delay(unsigned int delay_ms);
+
+/**
  * @brief Init car actuators
  * @author MK
 */
