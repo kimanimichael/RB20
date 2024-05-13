@@ -8,7 +8,9 @@
 enum carKinematicsStates {
     idling,
     drivingLeft,
+    drivingSlowLeft,
     drivingRight,
+    drivingSlowRight,
     drivingBoth,
     braking,
     reversingLeft,
