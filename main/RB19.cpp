@@ -6,7 +6,6 @@
 #include "steering.h"
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-// #include "driver/gpio.h"
 
 
 extern "C" void app_main(void)
@@ -22,6 +21,7 @@ extern "C" void app_main(void)
     //     steerCar();
     //     controlCarKinematics();
     // }
+    BSP::BSP_Delay(10000);
     BSP::BSPInit();
     carAppInit();
     // steerCar();
@@ -30,7 +30,8 @@ extern "C" void app_main(void)
         carAppRun();
         // steerCar();
         controlCarKinematics();
-        vTaskDelay(500/portTICK_PERIOD_MS);
+        BSP::BSP_Delay(100);
+        // vTaskDelay(500/portTICK_PERIOD_MS);
     }
 }
 
