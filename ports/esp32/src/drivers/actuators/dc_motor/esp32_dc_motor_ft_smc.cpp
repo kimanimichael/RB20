@@ -1,4 +1,5 @@
 #include "esp32_dc_motor_ft_smc.h"
+#include "stdio.h"
 
 ESP32DCMotorFtSmc::ESP32DCMotorFtSmc(gpio_num_t signal, BSP::motorDirections direction, BSP::motorSpeeds speed, ledc_channel_t motorChannel)
     :_signal(signal), _direction(direction), _speed(speed), _motorChannel(motorChannel)
@@ -10,12 +11,16 @@ void ESP32DCMotorFtSmc::init() {
     configure_pwm(_signal);
 
     _clockWiseSpeedMap[BSP::motorSpeeds::ZERO] = 77;
-    _clockWiseSpeedMap[BSP::motorSpeeds::LOW] = 85;
+    _clockWiseSpeedMap[BSP::motorSpeeds::SUPERSLOW] = 78;
+    _clockWiseSpeedMap[BSP::motorSpeeds::LOW] = 79;
+    _clockWiseSpeedMap[BSP::motorSpeeds::INTERMEDIATE] = 80;
     _clockWiseSpeedMap[BSP::motorSpeeds::MEDIUM] = 93;
     _clockWiseSpeedMap[BSP::motorSpeeds::HIGH] = 101;
 
     _counterClockWiseSpeedMap[BSP::motorSpeeds::ZERO] = 77;
-    _counterClockWiseSpeedMap[BSP::motorSpeeds::LOW] = 69;
+    _counterClockWiseSpeedMap[BSP::motorSpeeds::SUPERSLOW] = 76;
+    _counterClockWiseSpeedMap[BSP::motorSpeeds::LOW] = 75;
+    _counterClockWiseSpeedMap[BSP::motorSpeeds::INTERMEDIATE] = 73;
     _counterClockWiseSpeedMap[BSP::motorSpeeds::MEDIUM] = 61;
     _counterClockWiseSpeedMap[BSP::motorSpeeds::HIGH] = 53;
 
@@ -48,14 +53,26 @@ void ESP32DCMotorFtSmc::set_dir(BSP::motorDirections direction) {
 }
 
 void ESP32DCMotorFtSmc::set_speed(BSP::motorSpeeds speed) {
+    _speed = speed;
     switch (_direction)
     {
     case BSP::motorDirections::CLOCKWISE:
 
         switch (_speed)
         {
+        case BSP::motorSpeeds::ZERO:
+            _pwmDuty = _clockWiseSpeedMap.at(BSP::motorSpeeds::ZERO);
+            break;
+        case BSP::motorSpeeds::SUPERSLOW:
+            _pwmDuty = _clockWiseSpeedMap.at(BSP::motorSpeeds::SUPERSLOW);
+            break;
         case BSP::motorSpeeds::LOW:
             _pwmDuty = _clockWiseSpeedMap.at(BSP::motorSpeeds::LOW);
+            printf("LOW: PWM duty updated to %u\n", _pwmDuty);
+            break;
+        case BSP::motorSpeeds::INTERMEDIATE:
+            _pwmDuty = _clockWiseSpeedMap.at(BSP::motorSpeeds::INTERMEDIATE);
+            printf("INTERMEDIATE: PWM duty updated to %u\n", _pwmDuty);
             break;
         case BSP::motorSpeeds::MEDIUM:
             _pwmDuty = _clockWiseSpeedMap.at(BSP::motorSpeeds::MEDIUM);
@@ -64,6 +81,7 @@ void ESP32DCMotorFtSmc::set_speed(BSP::motorSpeeds speed) {
             _pwmDuty = _clockWiseSpeedMap.at(BSP::motorSpeeds::HIGH);
             break;
         default:
+            printf("BREAKS \n");
             break;
         }
         
@@ -72,8 +90,17 @@ void ESP32DCMotorFtSmc::set_speed(BSP::motorSpeeds speed) {
 
         switch (_speed)
         {
+        case BSP::motorSpeeds::ZERO:
+            _pwmDuty = _counterClockWiseSpeedMap.at(BSP::motorSpeeds::ZERO);
+            break;
+        case BSP::motorSpeeds::SUPERSLOW:
+            _pwmDuty = _counterClockWiseSpeedMap.at(BSP::motorSpeeds::SUPERSLOW);
+            break;
         case BSP::motorSpeeds::LOW:
             _pwmDuty = _counterClockWiseSpeedMap.at(BSP::motorSpeeds::LOW);
+            break;
+        case BSP::motorSpeeds::INTERMEDIATE:
+            _pwmDuty = _counterClockWiseSpeedMap.at(BSP::motorSpeeds::INTERMEDIATE);
             break;
         case BSP::motorSpeeds::MEDIUM:
             _pwmDuty = _counterClockWiseSpeedMap.at(BSP::motorSpeeds::MEDIUM);
@@ -91,6 +118,7 @@ void ESP32DCMotorFtSmc::set_speed(BSP::motorSpeeds speed) {
     }
     ledc_set_duty(LEDC_LOW_SPEED_MODE, _motorChannel, _pwmDuty);
     ledc_update_duty(LEDC_LOW_SPEED_MODE, _motorChannel);
+    printf("Motor speed set to %u\n", _pwmDuty);
 }
 
 void ESP32DCMotorFtSmc::run() {
