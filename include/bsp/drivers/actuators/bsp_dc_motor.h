@@ -12,7 +12,9 @@ enum motorDirections {
 
 enum motorSpeeds {
     ZERO,
+    SUPERSLOW,
     LOW,
+    INTERMEDIATE,
     MEDIUM,
     HIGH
 };
