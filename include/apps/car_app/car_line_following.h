@@ -1,5 +1,5 @@
-#ifndef __CAR_APP__
-#define __CAR_APP__
+#ifndef __CAR_APP__LF
+#define __CAR_APP__LF
 
 #include "bsp.h"
 
