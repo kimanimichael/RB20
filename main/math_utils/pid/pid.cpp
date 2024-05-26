@@ -1,6 +1,8 @@
 #include "pid.h"
 
-PID::PID() {
+PID::PID(double kp, double ki, double kd):
+    _kp(kp), _ki(ki), _kd(kd)
+{
 
 }
 
@@ -8,12 +10,12 @@ double PID::calculateOutput(double setPoint, double processVariable) {
     _setPoint = setPoint;
     _processVariable = processVariable;
 
-    error = _setPoint - _processVariable;
-    integral += error * _dt;
-    derivative = (error - previousError)/_dt;
+    _error = _setPoint - _processVariable;
+    _integral += _error * _dt;
+    _derivative = (_error - _previousError)/_dt;
 
-    output = kp*error + ki*integral + kd * derivative;
-    previousError = error;
+    output = _kp*_error + _ki*_integral + _kd * _derivative;
+    _previousError = _error;
 
     return output;
 }
