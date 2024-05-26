@@ -14,8 +14,8 @@
 
 BSP::DcMotor* kinematicsLeftMotor;
 BSP::DcMotor* kinematicsRightMotor;
-extern carKinematicsStates RB19Kinematics;
 
+carKinematicsStates RB19Kinematics;
 
 void controlCarKinematics() {
 

@@ -7,7 +7,6 @@ Infrared5Channel* infraredSensor;
 Infrared5Channel::detectedChannels sensorDetectedChannels;
 
 carSteerStates RB19Steer;
-carKinematicsStates RB19Kinematics;
 
 void carAppInit() {
     RB19Kinematics = idling;
