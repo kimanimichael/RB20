@@ -121,6 +121,13 @@ void ESP32DCMotorFtSmc::set_speed(BSP::motorSpeeds speed) {
     printf("Motor speed set to %u\n", _pwmDuty);
 }
 
+void ESP32DCMotorFtSmc::set_raw_speed(unsigned int speed) {
+    _pwmDuty = speed;
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, _motorChannel, _pwmDuty);
+    ledc_update_duty(LEDC_LOW_SPEED_MODE, _motorChannel);
+    printf("Motor speed set to %u\n", _pwmDuty);
+}
+
 void ESP32DCMotorFtSmc::run() {
     
 }

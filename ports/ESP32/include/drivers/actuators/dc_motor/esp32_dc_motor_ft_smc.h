@@ -24,6 +24,11 @@ public:
     void run() override;
 
     void stop() override;
+
+    /**
+     * @brief Sets a motor's raw speed
+    */
+    void set_raw_speed(unsigned int speed) override;
 private:
     gpio_num_t _signal;
     unsigned int _pwmDuty;
