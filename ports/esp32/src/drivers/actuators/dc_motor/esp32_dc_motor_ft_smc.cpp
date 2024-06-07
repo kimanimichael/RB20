@@ -13,7 +13,7 @@ void ESP32DCMotorFtSmc::init() {
     _clockWiseSpeedMap[BSP::motorSpeeds::ZERO] = 77;
     _clockWiseSpeedMap[BSP::motorSpeeds::SUPERSLOW] = 78;
     _clockWiseSpeedMap[BSP::motorSpeeds::LOW] = 79;
-    _clockWiseSpeedMap[BSP::motorSpeeds::INTERMEDIATE] = 80;
+    _clockWiseSpeedMap[BSP::motorSpeeds::INTERMEDIATE] = 81;
     _clockWiseSpeedMap[BSP::motorSpeeds::MEDIUM] = 93;
     _clockWiseSpeedMap[BSP::motorSpeeds::HIGH] = 101;
 
@@ -122,10 +122,57 @@ void ESP32DCMotorFtSmc::set_speed(BSP::motorSpeeds speed) {
 }
 
 void ESP32DCMotorFtSmc::set_raw_speed(unsigned int speed) {
-    _pwmDuty = speed;
+    _pwmDuty = validate_motor_speed(speed);
     ledc_set_duty(LEDC_LOW_SPEED_MODE, _motorChannel, _pwmDuty);
     ledc_update_duty(LEDC_LOW_SPEED_MODE, _motorChannel);
     printf("Motor speed set to %u\n", _pwmDuty);
+}
+#define MAX_CW_PWM_VALUE 79
+#define MIN_CW_PWM_VALUE 77
+
+#define MAX_CCW_PWM_VALUE 77
+#define MIN_CCW_PWM_VALUE 73
+
+unsigned int ESP32DCMotorFtSmc::validate_motor_speed(unsigned int speed) {
+    unsigned int validatedSpeed;
+    switch (_direction)
+    {
+    case BSP::motorDirections::CLOCKWISE:
+        /* code */
+        if(speed > MAX_CW_PWM_VALUE) {
+            validatedSpeed = MAX_CW_PWM_VALUE;
+            return validatedSpeed;
+        }
+        else if (speed < MIN_CW_PWM_VALUE) {
+            validatedSpeed = MIN_CW_PWM_VALUE;
+            return validatedSpeed;
+        }
+        else {
+            validatedSpeed = speed;
+            return validatedSpeed;
+        }
+        break;
+    case BSP::motorDirections::COUNTERCLOCKWISE:
+        /* code */
+        if(speed > MAX_CCW_PWM_VALUE) {
+            validatedSpeed = MAX_CCW_PWM_VALUE;
+            return validatedSpeed;
+        }
+        else if (speed < MIN_CCW_PWM_VALUE) {
+            validatedSpeed = MIN_CCW_PWM_VALUE;
+            return validatedSpeed;
+        }
+        else {
+            validatedSpeed = speed;
+            return validatedSpeed;
+        }
+        break;
+    
+    default:
+        validatedSpeed = 0; 
+        return validatedSpeed;
+        break;
+    }
 }
 
 void ESP32DCMotorFtSmc::run() {

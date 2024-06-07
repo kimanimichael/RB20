@@ -29,6 +29,11 @@ public:
      * @brief Sets a motor's raw speed
     */
     void set_raw_speed(unsigned int speed) override;
+
+    /**
+     * @brief Validate the set motor speed value
+    */
+    unsigned int validate_motor_speed(unsigned int speed);
 private:
     gpio_num_t _signal;
     unsigned int _pwmDuty;
