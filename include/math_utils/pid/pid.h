@@ -24,6 +24,7 @@ private:
     double _kp;
     double _ki;
     double _kd;
+    double _previousOutput;
 
 };
 
