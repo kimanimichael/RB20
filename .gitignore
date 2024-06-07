@@ -5,3 +5,4 @@ sdkconfig.old
 build /
 .idea/
 cmake-build-debug-gcc_arm/
+cmake_build_clion/
