@@ -6,7 +6,7 @@
 /**
  * @brief Control vehicular kinematics: braking and accelerating
 */
-void controlCarKinematics();
+double controlCarKinematics();
 
 
 #endif
