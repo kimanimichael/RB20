@@ -20,7 +20,7 @@ double PID::calculateOutput(double setPoint, double processVariable) {
     _processVariable = processVariable;
 
     _error = _setPoint - _processVariable;
-    _integral += _error * _dt;
+    _integral += 0;
     if (_integral > MAX_INTEGRAL_VALUE) {
         _integral = MAX_INTEGRAL_VALUE;
     }
