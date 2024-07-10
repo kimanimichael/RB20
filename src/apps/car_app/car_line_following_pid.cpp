@@ -4,7 +4,7 @@ Infrared5Channel* infraredSensor;
 Infrared5Channel::detectedChannels sensorDetectedChannels;
 
 double lineError;
-PID lineFollowingPid(0.5, 3.80, 0.10);
+PID lineFollowingPid(0.5, 3.80, 1.10);
 double PIDOutput;
 
 void carAppInit() {
