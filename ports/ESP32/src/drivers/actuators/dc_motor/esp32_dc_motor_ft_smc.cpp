@@ -125,10 +125,10 @@ void ESP32DCMotorFtSmc::set_raw_speed(unsigned int speed) {
     _pwmDuty = validate_motor_speed(speed);
     ledc_set_duty(LEDC_LOW_SPEED_MODE, _motorChannel, _pwmDuty);
     ledc_update_duty(LEDC_LOW_SPEED_MODE, _motorChannel);
-    printf("Motor speed set to %u\n", _pwmDuty);
+//    printf("Motor speed set to %u\n", _pwmDuty);
 }
-#define MAX_CW_PWM_VALUE 79
-#define MIN_CW_PWM_VALUE 77
+#define MAX_CW_PWM_VALUE 80
+#define MIN_CW_PWM_VALUE 78
 
 #define MAX_CCW_PWM_VALUE 77
 #define MIN_CCW_PWM_VALUE 73
