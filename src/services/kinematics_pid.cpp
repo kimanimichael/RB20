@@ -5,8 +5,8 @@
 BSP::DcMotor* kinematicsLeftMotor = BSP::getDefaultKinematicsLeftMotor();
 BSP::DcMotor* kinematicsRightMotor = BSP::getDefaultKinematicsRightMotor();
 
-#define LEFT_MOTOR_BASE_SPEED 79
-#define RIGHT_MOTOR_BASE_SPEED 78
+#define LEFT_MOTOR_BASE_SPEED 80
+#define RIGHT_MOTOR_BASE_SPEED 79
 // #define RIGHT_MOTOR_MAX_SPEED 79
 
 
@@ -21,7 +21,7 @@ double controlCarKinematics() {
     //     rightMotorSpeed = RIGHT_MOTOR_MAX_SPEED;
     // }
 
-    // printf("Left Motor: %u || Right Motor: %u\n", leftMotorSpeed, rightMotorSpeed);
+     printf("Left Motor: %u || Right Motor: %u\n", leftMotorSpeed, rightMotorSpeed);
 
     kinematicsLeftMotor->set_dir(BSP::CLOCKWISE);
     kinematicsLeftMotor->set_raw_speed(leftMotorSpeed);
