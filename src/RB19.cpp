@@ -24,7 +24,7 @@ int main()
     //     steerCar();
     //     controlCarKinematics();
     // }
-    BSP::BSP_Delay(10000);
+    BSP::BSP_Delay(20000);
     BSP::BSPInit();
     carAppInit();
     // steerCar();
