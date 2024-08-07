@@ -6,6 +6,8 @@
 
 extern double PIDOutput;
 
+extern int cornerSpeedDiff;
+
 void carAppInit();
 
 void carAppRun();

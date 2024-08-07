@@ -5,8 +5,8 @@
 BSP::DcMotor* kinematicsLeftMotor = BSP::getDefaultKinematicsLeftMotor();
 BSP::DcMotor* kinematicsRightMotor = BSP::getDefaultKinematicsRightMotor();
 
-#define LEFT_MOTOR_BASE_SPEED 80
-#define RIGHT_MOTOR_BASE_SPEED 79
+#define LEFT_MOTOR_BASE_SPEED 83200
+#define RIGHT_MOTOR_BASE_SPEED 82700
 // #define RIGHT_MOTOR_MAX_SPEED 79
 
 
@@ -15,8 +15,8 @@ unsigned int rightMotorSpeed;
 
 double controlCarKinematics() {
 
-    leftMotorSpeed = LEFT_MOTOR_BASE_SPEED - PIDOutput;
-    rightMotorSpeed = RIGHT_MOTOR_BASE_SPEED + PIDOutput;
+    leftMotorSpeed = int((LEFT_MOTOR_BASE_SPEED - cornerSpeedDiff) - (PIDOutput*700));
+    rightMotorSpeed = int((RIGHT_MOTOR_BASE_SPEED- (float (cornerSpeedDiff)*(float (82700)/float (83200)))) + (PIDOutput*700));
     // if (rightMotorSpeed > RIGHT_MOTOR_MAX_SPEED) {
     //     rightMotorSpeed = RIGHT_MOTOR_MAX_SPEED;
     // }

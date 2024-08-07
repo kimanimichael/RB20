@@ -30,7 +30,7 @@ void ESP32DCMotorFtSmc::init() {
 void ESP32DCMotorFtSmc::configure_pwm(gpio_num_t signal) {
     ledc_timer_config_t pwmTimer = {
         .speed_mode = LEDC_LOW_SPEED_MODE,
-        .duty_resolution = LEDC_TIMER_10_BIT,
+        .duty_resolution = LEDC_TIMER_20_BIT,
         .timer_num = LEDC_TIMER_0,
         .freq_hz = 50,
         .clk_cfg = LEDC_AUTO_CLK
@@ -127,8 +127,8 @@ void ESP32DCMotorFtSmc::set_raw_speed(unsigned int speed) {
     ledc_update_duty(LEDC_LOW_SPEED_MODE, _motorChannel);
 //    printf("Motor speed set to %u\n", _pwmDuty);
 }
-#define MAX_CW_PWM_VALUE 80
-#define MIN_CW_PWM_VALUE 78
+#define MAX_CW_PWM_VALUE 88000
+#define MIN_CW_PWM_VALUE 80000
 
 #define MAX_CCW_PWM_VALUE 77
 #define MIN_CCW_PWM_VALUE 73

@@ -4,8 +4,8 @@
 #include "car_line_following_pid.h"
 #include "kinematics_pid.h"
 #include "steering.h"
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
+//#include <freertos/FreeRTOS.h>
+//#include <freertos/task.h>
 
 
 extern "C" void app_main(void)
@@ -21,7 +21,7 @@ extern "C" void app_main(void)
     //     steerCar();
     //     controlCarKinematics();
     // }
-    BSP::BSP_Delay(10000);
+    BSP::BSP_Delay(20000);
     BSP::BSPInit();
     carAppInit();
     // steerCar();
