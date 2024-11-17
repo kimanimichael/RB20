@@ -7,8 +7,11 @@
 // #include <freertos/FreeRTOS.h>
 // #include <freertos/task.h>
 
-
+#ifdef ESP32
 extern "C" void app_main(void)
+#else
+int main()
+#endif
 {
     // front_lights_on();
     /* Put in it's own thread*/
