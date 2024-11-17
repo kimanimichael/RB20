@@ -8,10 +8,12 @@ add_compile_options(-fdiagnostics-color=always)
 
 include(${MBED_PATH}/tools/cmake/app.cmake)
 
+project(${APP_TARGET})
+
 include(${CMAKE_CURRENT_LIST_DIR}/../../../cmake/app.cmake)
 add_subdirectory(${MBED_PATH})
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/STM32G070KB)
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../mbed_common ${CMAKE_CURRENT_BINARY_DIR}/canister-mbed-common)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../mbed_common ${CMAKE_CURRENT_BINARY_DIR}/rb20-mbed-common)
 
 add_executable(${APP_TARGET})
 mbed_configure_app_target(${APP_TARGET})
