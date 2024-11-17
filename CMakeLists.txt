@@ -6,6 +6,8 @@ cmake_minimum_required(VERSION 3.16)
 
 include(cmake/app.cmake)
 
+set(APP_TARGET RB20)
+
 if (PLATFORM STREQUAL ESP32)
     include($ENV{IDF_PATH}/tools/cmake/project.cmake)
     message("ESP32 port selected")
@@ -17,6 +19,13 @@ if (PLATFORM STREQUAL ESP32)
             ports/ESP32
     )
     idf_build_component(ports/ESP32)
+    add_definitions(-DESP32)
+
+elseif (PLATFORM STREQUAL STM32G070X)
+    message("STM32G070X port selected")
+    include("ports/${PLATFORM}/CMakeLists.txt")
+else ()
+    message(FATAL_ERROR "Invalid platform specified: ${PLATFORM}")
 endif ()
 
-project(RB20)
+project(${APP_TARGET})
