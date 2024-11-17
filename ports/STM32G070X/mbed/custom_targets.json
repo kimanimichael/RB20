@@ -1,0 +1,28 @@
+{
+  "STM32G070KB": {
+    "inherits": [
+      "MCU_STM32G070xB"
+    ],
+    "macros_add": [
+      "STM32G070KB"
+    ],
+
+    "config": {
+
+    },
+
+    "device_has_add": [
+
+    ],
+
+    "device_name": "STM32G070KB",
+    "overrides": {
+      "clock_source":"USE_PLL_HSI",
+      "rtc_clock_source":"USE_RTC_CLK_LSI",
+      "lse_available":0
+    }
+  }
+
+
+}
+

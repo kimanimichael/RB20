@@ -1,0 +1,47 @@
+{
+  "requires": [],
+  "macros": [
+    "MBED_HEAP_STATS_ENABLED=1",
+    "DEBUG_ISR_STACK_USAGE=1",
+    "MBED_STACK_STATS_ENABLED=1",
+    "MBED_MEM_TRACING_ENABLED=1"
+  ],
+  "config": {
+    "trace-level": {
+      "help": "Options are TRACE_LEVEL_ERROR,TRACE_LEVEL_WARN,TRACE_LEVEL_INFO,TRACE_LEVEL_DEBUG",
+      "macro_name": "MBED_TRACE_MAX_LEVEL",
+      "value": "TRACE_LEVEL_DEBUG"
+    }
+  },
+  "target_overrides": {
+    "*" : {
+      "mbed-trace.enable": true,
+      "platform.stdio-convert-newlines": true,
+      "platform.crash-capture-enabled": false,
+      "platform.error-filename-capture-enabled":false,
+      "platform.max-error-filename-len": 64,
+      "platform.stdio-baud-rate": 115200,
+      "platform.stdio-buffered-serial": true,
+      "platform.default-serial-baud-rate": 115200,
+      "platform.fatal-error-auto-reboot-enabled":true,
+      "platform.error-reboot-max":"5",
+      "target.c_lib":"small",
+      "target.components_add":["SPIF"],
+
+      "spif-driver.SPI_MOSI": "PA_7",
+      "spif-driver.SPI_MISO": "PA_6",
+      "spif-driver.SPI_CLK": "PA_5",
+      "spif-driver.SPI_CS": "PB_10",
+      "spif-driver.debug": false,
+      "events.shared-eventsize":1024
+    },
+    "NUCLEO_G071RB":{
+      "target.clock_source":"USE_PLL_HSI",
+      "target.rtc_clock_source":"USE_RTC_CLK_LSI",
+      "target.lse_available":0,
+      "target.stdio_uart_tx": "PB_2",
+      "target.stdio_uart_rx": "PB_0"
+
+    }
+  }
+}
