@@ -21,28 +21,28 @@ enum pinLineDetection {
     notDetected
 };
 
-ESP32Infrared5Channel::detectedChannels _detectedChannel;
+ESP32Infrared5Channel::detectedChannels detectedChannel;
 ESP32Infrared5Channel::detectedChannels ESP32Infrared5Channel::read() {
-    _detectedChannel = ESP32Infrared5Channel::detectedChannels::noChannel;
+    detectedChannel = ESP32Infrared5Channel::detectedChannels::noChannel;
     if (gpio_get_level(_farLeft) == detected) {
         printf("Detected: far left\n");
-        _detectedChannel =  ESP32Infrared5Channel::detectedChannels::farLeftChannel;
+        detectedChannel =  ESP32Infrared5Channel::detectedChannels::farLeftChannel;
     }
     if (gpio_get_level(_closeLeft) == detected) {
         printf("Detected: close left\n");
-        _detectedChannel = ESP32Infrared5Channel::detectedChannels::halfLeftChannel;
+        detectedChannel = ESP32Infrared5Channel::detectedChannels::halfLeftChannel;
     }
     if (gpio_get_level(_middle) == detected) {
         printf("Detected: Middle\n");
-        _detectedChannel = ESP32Infrared5Channel::detectedChannels::centralChannel;
+        detectedChannel = ESP32Infrared5Channel::detectedChannels::centralChannel;
     }
     if (gpio_get_level(_closeRight) == detected) {
         printf("Detected: close right\n");
-        _detectedChannel = ESP32Infrared5Channel::detectedChannels::halfRightChannel;
+        detectedChannel = ESP32Infrared5Channel::detectedChannels::halfRightChannel;
     }
     if ((gpio_get_level(_farRight) == detected)) {
         printf("Detected: far right\n");
-        _detectedChannel = ESP32Infrared5Channel::detectedChannels::farRightChannel;
+        detectedChannel = ESP32Infrared5Channel::detectedChannels::farRightChannel;
     }
-    return _detectedChannel;
+    return detectedChannel;
 }
