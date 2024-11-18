@@ -3,11 +3,12 @@
 
 #define MBED_G070_ONBOARD_LED         PB_3
 
-#define MBED_G070_FTSMC_MOTOR_PWM         PB_3
+#define FT_SMC_LT_MOTOR_PWM         PB_0
+#define FT_SMC_RT_MOTOR_PWM         PB_1
 
-#define MBED_G070_IR_FAR_LEFT          PB_4
-#define MBED_G070_IR_CLOSE_LEFT          PB_4
-#define MBED_G070_IR_MIDDLE          PB_4
-#define MBED_G070_IR_CLOSE_RIGHT          PB_4
-#define MBED_G070_IR_FAR_RIGHT          PB_4
+#define IR_FAR_LEFT          PA_1
+#define IR_CLOSE_LEFT          PA_2
+#define IR_MIDDLE          PA_3
+#define IR_CLOSE_RIGHT          PA_4
+#define IR_FAR_RIGHT          PA_5
 #endif

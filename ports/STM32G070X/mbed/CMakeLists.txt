@@ -26,6 +26,7 @@ target_link_libraries(${APP_TARGET}
 target_include_directories(${APP_TARGET}
         PRIVATE
         ${APP_COMMON_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
 target_sources(${APP_TARGET}

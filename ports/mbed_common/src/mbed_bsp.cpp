@@ -1,4 +1,8 @@
+#include <mbed_infrared5channel.h>
+
 #include "bsp.h"
+#include "mbed_dc_motor_ft_smc.h"
+#include "pinouts.h"
 
 namespace BSP
 {
@@ -9,18 +13,21 @@ namespace BSP
 
     }
     void initActuators() {
-
+        getDefaultKinematicsLeftMotor()->init();
+        getDefaultKinematicsRightMotor()->init();
     }
     void initSensors() {
-
+        getDefaultKinematicsLeftMotor()->init();
     }
 
     DcMotor* getDefaultKinematicsLeftMotor() {
-        return nullptr;
+        static MbedDCMotor kinematics_motor(FT_SMC_LT_MOTOR_PWM, CLOCKWISE, LOW);
+        return &kinematics_motor;
     }
 
     DcMotor* getDefaultKinematicsRightMotor() {
-        return nullptr;
+        static MbedDCMotor kinematics_motor(FT_SMC_RT_MOTOR_PWM, CLOCKWISE, LOW);
+        return &kinematics_motor;
     }
 
     DcMotor* getDefaultSteeringMotor() {
@@ -28,7 +35,8 @@ namespace BSP
     }
 
     Infrared5Channel* getDefaultInfraredSensor() {
-        return nullptr;
+        static MbedInfrared5Channel infrared_sensor(IR_FAR_LEFT, IR_CLOSE_LEFT, IR_MIDDLE, IR_CLOSE_RIGHT, IR_FAR_RIGHT);
+        return &infrared_sensor;
     }
 
 }
