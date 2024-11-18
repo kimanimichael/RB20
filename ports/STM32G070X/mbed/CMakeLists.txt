@@ -20,6 +20,7 @@ mbed_configure_app_target(${APP_TARGET})
 
 target_link_libraries(${APP_TARGET}
         rb20-mbed-common
+        mbed-os
 )
 
 target_include_directories(${APP_TARGET}
