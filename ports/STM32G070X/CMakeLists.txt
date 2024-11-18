@@ -1,0 +1,7 @@
+if (NOT DEFINED STM32G070_FRAMEWORK)
+    set(STM32G070_FRAMEWORK "MBED")
+endif ()
+
+if (STM32G070_FRAMEWORK STREQUAL "MBED")
+    include(${CMAKE_CURRENT_LIST_DIR}/mbed/CMakeLists.txt)
+endif ()

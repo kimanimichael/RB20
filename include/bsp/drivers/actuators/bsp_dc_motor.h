@@ -23,6 +23,7 @@ class DcMotor {
 private:
 
 public:
+ virtual ~DcMotor() = default;
 
 public:
     /**
