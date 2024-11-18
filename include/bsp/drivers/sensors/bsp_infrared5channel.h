@@ -3,6 +3,8 @@
 class Infrared5Channel
 {
 public:
+    virtual ~Infrared5Channel() = default;
+
     enum detectedChannels {
         farLeftChannel,
         halfLeftChannel,
