@@ -1,48 +1,49 @@
-#include "car_line_following.h"
-#include "steering.h"
-#include "kinematics.h"
-#include <stdio.h>
+#include "car_line_following_pid.h"
 
 Infrared5Channel* infraredSensor;
 Infrared5Channel::detectedChannels sensorDetectedChannels;
 
-carSteerStates RB19Steer;
+double lineError;
+PID lineFollowingPid(0.9, 3.80, 959.80);
+double PIDOutput;
+
+int cornerSpeedDiff;
 
 void carAppInit() {
-    RB19Kinematics = idling;
     infraredSensor = BSP::getDefaultInfraredSensor();
     carAppRun();
 }
 
 void carAppRun() {
-    sensorDetectedChannels = infraredSensor ->read();
+    sensorDetectedChannels = infraredSensor->read();
     switch (sensorDetectedChannels)
     {
     case Infrared5Channel::detectedChannels::centralChannel:
-        /* code */
-        RB19Kinematics = drivingBoth;
+        lineError = 0.0;
+        cornerSpeedDiff = 1200;
         break;
     case Infrared5Channel::detectedChannels::halfLeftChannel:
-        RB19Kinematics = drivingSlowRight;
+        lineError = -0.7;
+        cornerSpeedDiff = 2000;
         break;
     case Infrared5Channel::detectedChannels::farLeftChannel:
-        /* code */
-        RB19Kinematics = drivingRight;
+        lineError = -2.0;
+        cornerSpeedDiff = 2000;
         break;
     case Infrared5Channel::detectedChannels::halfRightChannel:
-        RB19Kinematics = drivingSlowLeft;
+        lineError = 0.7;
+        cornerSpeedDiff = 2000;
         break;
     case Infrared5Channel::detectedChannels::farRightChannel:
-        /* code */
-        RB19Kinematics = drivingLeft;
-        break;
-    case Infrared5Channel::detectedChannels::noChannel:
-        /* code */
-        RB19Kinematics = RB19Kinematics;
-        printf("Car maintaining drive \n");
-        
+        lineError = 2.0;
+        cornerSpeedDiff = 2000;
         break;
     default:
         break;
     }
+
+    lineFollowingPid._dt = 0.025;
+    PIDOutput = lineFollowingPid.calculateOutput(0, lineError);
+
+
 }

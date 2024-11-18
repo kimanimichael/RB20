@@ -4,7 +4,6 @@
 
 #include "bsp_dc_motor.h"
 
-
 enum carKinematicsStates {
     idling,
     drivingLeft,
@@ -16,6 +15,8 @@ enum carKinematicsStates {
     reversingLeft,
     reversingRight
 };
+
+extern carKinematicsStates RB19Kinematics;
 
 
 /**

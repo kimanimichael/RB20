@@ -46,3 +46,7 @@ void ESP32DcMotorL298N::stop() {
 void ESP32DcMotorL298N::set_speed(BSP::motorSpeeds speed) {
 
 }
+
+void ESP32DcMotorL298N::set_raw_speed(unsigned int speed) {
+
+}
