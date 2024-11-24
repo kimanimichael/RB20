@@ -11,6 +11,14 @@ MBED_GEN_CMD = '''mbed-tools configure -m {MBED_TARGET} -t GCC_ARM -o cmake_buil
 CMAKE_GEN_CMD = '''cmake -S .  -B cmake_build/{PORT} -G Ninja -DPLATFORM={PORT}'''
 CMAKE_BUILD_CMD = '''cmake --build cmake_build/{PORT}'''
 
+IMAGE_DIR = '''cmake_build/{PORT}/RB20.bin'''
+
+ST_FLASH_APPLICATION_CMD = '''st-flash write 
+{IMAGE} 0x8000000 && st-info --reset
+'''
+
+ESP_FLASH_APPLICATION_CMD = '''ninja -C cmake_build/{PORT}/ flash'''
+
 DEFAULT_MBED_TARGET = "NUCLEO_G071RB"
 
 def build_image(port, platform, mbed_target = DEFAULT_MBED_TARGET):
@@ -38,7 +46,16 @@ def build_image(port, platform, mbed_target = DEFAULT_MBED_TARGET):
     print(colorama.Fore.GREEN + "Compiled firmware successfully" + colorama.Style.RESET_ALL)
 
 
-def _flash_application():
+def _flash_application(port, image):
+    global flash_cmd
+    if port == "STM32G070X":
+        flash_cmd = ST_FLASH_APPLICATION_CMD.format(IMAGE = image)
+    elif port == "ESP32":
+        flash_cmd = ESP_FLASH_APPLICATION_CMD.format(PORT = port)
+    print(flash_cmd)
+    ret = os.system(" ".join(flash_cmd.split("\n")))
+    if ret != 0:
+        raise Exception("Flashing failed")
     print(colorama.Fore.MAGENTA, "Flashing Image" + colorama.Style.RESET_ALL)
 
 
@@ -60,7 +77,8 @@ def build_application(port, platform, compile, flash):
     if compile:
         build_image(port, platform)
     if flash:
-        _flash_application()
+        image_dir = IMAGE_DIR.format(PORT = port)
+        _flash_application(port, image_dir)
 
 
 if __name__ == "__main__":
