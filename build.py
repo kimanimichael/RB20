@@ -6,14 +6,14 @@ import os
 import click
 import colorama
 
-CMAKE_GEN_CMD = '''cmake -S .  -B cmake_build/{VARIANT} -G Ninja -DPLATFORM={VARIANT}'''
-CMAKE_BUILD_CMD = '''cmake --build cmake_build/{VARIANT}'''
+CMAKE_GEN_CMD = '''cmake -S .  -B cmake_build/{PORT} -G Ninja -DPLATFORM={PORT}'''
+CMAKE_BUILD_CMD = '''cmake --build cmake_build/{PORT}'''
 
-DEFAULT_VARIANT="STM32G070X"
-def build_image(variant=DEFAULT_VARIANT):
+DEFAULT_PORT="STM32G070X"
+def build_image(port=DEFAULT_PORT):
     print(colorama.Fore.CYAN, "Building Image" + colorama.Style.RESET_ALL)
-    cmake_gen_command = CMAKE_GEN_CMD.format(VARIANT=variant)
-    cmake_build_command = CMAKE_BUILD_CMD.format(VARIANT=variant)
+    cmake_gen_command = CMAKE_GEN_CMD.format(PORT=port)
+    cmake_build_command = CMAKE_BUILD_CMD.format(PORT=port)
     print(cmake_gen_command)
     ret = os.system(" ".join(cmake_gen_command.split("\n")))
     if ret != 0:
@@ -37,12 +37,12 @@ def cli():
     print(colorama.Fore.LIGHTGREEN_EX, "[CLI]\n" + colorama.Style.RESET_ALL)
 
 @cli.command()
-@click.option("-v", "-variant", "variant", default=DEFAULT_VARIANT,type=click.STRING, help="optional variant")
+@click.option("-p", "-port", "port", default=DEFAULT_PORT,type=click.STRING, help="mandatory port")
 @click.option("--compile", is_flag=True, help="compile image, default False")
 @click.option("--flash", is_flag=True, help="flash image, default False")
-def build_application(variant, compile, flash):
+def build_application(port, compile, flash):
     if compile:
-        build_image(variant)
+        build_image(port)
     if flash:
         _flash_application()
 
