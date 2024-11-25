@@ -5,8 +5,12 @@ Requires stlink v1.6.0
 import os
 import click
 import colorama
+import subprocess
 
 MBED_GEN_CMD = '''mbed-tools configure -m {MBED_TARGET} -t GCC_ARM -o cmake_build/{PORT}/ --mbed-os-path ports/mbed_common/mbed-os --app-config ports/{PORT}/mbed/mbed_app.json '''
+
+ESP_IDF_DIR = '''$HOME/esp/'''
+ESP_IDF_EXPORT_CMD = '''bash -c "source {ESP_IDF_DIR}esp-idf/export.sh"'''
 
 CMAKE_GEN_CMD = '''cmake -S .  -B cmake_build/{PORT} -G Ninja -DPLATFORM={PORT}'''
 CMAKE_BUILD_CMD = '''cmake --build cmake_build/{PORT}'''
@@ -31,6 +35,10 @@ def build_image(port, platform, mbed_target = DEFAULT_MBED_TARGET):
             raise Exception("CMake generation failed!")
     elif platform == "ESP_IDF":
         print("ESP-IDF PLATFORM")
+        try:
+            subprocess.run(ESP_IDF_EXPORT_CMD.format(ESP_IDF_DIR = ESP_IDF_DIR), shell=True, env=None, check=True)
+        except subprocess.CalledProcessError as e:
+            raise Exception(f"Command failed: {e}")
     print(colorama.Fore.CYAN, "Building Image" + colorama.Style.RESET_ALL)
     cmake_gen_command = CMAKE_GEN_CMD.format(PORT=port)
     cmake_build_command = CMAKE_BUILD_CMD.format(PORT=port)
