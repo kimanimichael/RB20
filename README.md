@@ -31,59 +31,26 @@ The following ports are supported:
 ### ESP32
 Using ESP-IDF
 #### Build
-For the first time, at the root of the project, run:
+From the project root, run:
 
 ``
-chmod +x ./build_cmake_esp32.sh
+python3 build.py build-application -p ESP32 -pl ESP_IDF --compile
 ``
 
-``
-. $HOME/esp/esp-idf/export.sh
-``
-
-``
-./build_cmake_esp32.sh
-``
-
-For successive builds in a new terminal, run:
-
-``
-. $HOME/esp/esp-idf/export.sh
-``
-
-``
-./build_cmake_esp32.sh
-``
-
-For successive builds in the same terminal instance, run:
-
-``
-./build_cmake_esp32.sh
-``
 #### Flashing instructions
 Connect the ESP32 to your computer and run:
 
 ``
-ninja -C cmake_build/ESP32/ flash
+python3 build.py build-application -p ESP32 -pl ESP_IDF --flash
 ``
 
 ### STM32G070
 Using Mbed OS
 #### Build instructions
-For the first time, at the root of the project, run:
+From the project root, run:
 
 ``
-chmod +x ./build_cmake_g070.sh
-``
-
-``
-./build_cmake_g070.sh
-``
-
-For successive builds, run:
-
-``
-./build_cmake_g070.sh
+python3 build.py build-application -p STM32G070X -pl MBED --compile
 ``
 
 #### Flashing requirements
@@ -92,7 +59,7 @@ For successive builds, run:
 Connect the STM32G070 to your computer and run:
 
 ``
-st-flash write cmake_build/STM32G070X/RB20.bin 0x8000000
+python3 build.py build-application -p STM32G070X -pl MBED --flash 
 ``
 
 ## Documentation
