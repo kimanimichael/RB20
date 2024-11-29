@@ -35,17 +35,19 @@ def set_up_idf_env(esp_idf_dir):
     except subprocess.CalledProcessError as e:
         raise Exception(f"Could not set up ESP-IDF environment: {e}")
 def build_image(port, platform, mbed_target = DEFAULT_MBED_TARGET):
+    print(colorama.Fore.MAGENTA + "Compiling firmware" + colorama.Style.RESET_ALL)
     print(port)
     if platform == "MBED":
         print("MBED Platform")
+        print(colorama.Fore.CYAN, "Generating mbed config files" + colorama.Style.RESET_ALL)
         mbed_gen_command = MBED_GEN_CMD.format(MBED_TARGET = mbed_target, PORT = port)
         ret = os.system(" ".join(mbed_gen_command.split("\n")))
         if ret != 0:
             raise Exception("CMake generation failed!")
     elif platform == "ESP_IDF":
         print("ESP-IDF PLATFORM")
+        print(colorama.Fore.CYAN, "Sourcing ESP-IDF environment" + colorama.Style.RESET_ALL)
         set_up_idf_env(ESP_IDF_DIR)
-    print(colorama.Fore.CYAN, "Building Image" + colorama.Style.RESET_ALL)
     cmake_gen_command = CMAKE_GEN_CMD.format(PORT=port)
     cmake_build_command = CMAKE_BUILD_CMD.format(PORT=port)
     print(cmake_gen_command)
@@ -61,6 +63,7 @@ def build_image(port, platform, mbed_target = DEFAULT_MBED_TARGET):
 
 
 def _flash_application(port, image):
+    print(colorama.Fore.MAGENTA, "Flashing Image" + colorama.Style.RESET_ALL)
     global flash_cmd
     if port == "STM32G070X":
         flash_cmd = ST_FLASH_APPLICATION_CMD.format(IMAGE = image)
@@ -70,8 +73,8 @@ def _flash_application(port, image):
     ret = os.system(" ".join(flash_cmd.split("\n")))
     if ret != 0:
         raise Exception("Flashing failed")
-    print(colorama.Fore.MAGENTA, "Flashing Image" + colorama.Style.RESET_ALL)
-
+    else:
+        print(colorama.Fore.GREEN, "Flashing Success" + colorama.Style.RESET_ALL)
 
 @click.group()
 def cli():
