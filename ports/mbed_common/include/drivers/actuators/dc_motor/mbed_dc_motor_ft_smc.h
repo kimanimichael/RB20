@@ -28,7 +28,7 @@ public:
     /**
     * @brief Validate the set motor speed value
     */
-    unsigned int validate_motor_speed(unsigned int speed);
+    float validate_motor_speed(unsigned int speed);
 
     /**
     * @brief Sets a motor's raw speed

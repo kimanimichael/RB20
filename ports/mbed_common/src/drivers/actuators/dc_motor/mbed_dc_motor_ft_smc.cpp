@@ -105,8 +105,8 @@ void MbedDCMotor::set_speed(const BSP::motorSpeeds speed) {
 #define MAX_CCW_PWM_VALUE 77
 #define MIN_CCW_PWM_VALUE 73
 
-unsigned int MbedDCMotor::validate_motor_speed(unsigned int speed) {
-    unsigned int validatedSpeed;
+float MbedDCMotor::validate_motor_speed(unsigned int speed) {
+    float validatedSpeed;
     switch (_direction)
     {
         case BSP::motorDirections::CLOCKWISE:
@@ -120,7 +120,7 @@ unsigned int MbedDCMotor::validate_motor_speed(unsigned int speed) {
                     return validatedSpeed;
                 }
                 else {
-                    validatedSpeed = speed;
+                    validatedSpeed = static_cast<float>(speed);
                     return validatedSpeed;
                 }
         break;
@@ -135,14 +135,14 @@ unsigned int MbedDCMotor::validate_motor_speed(unsigned int speed) {
                     return validatedSpeed;
                 }
                 else {
-                    validatedSpeed = speed;
+                    validatedSpeed = static_cast<float>(speed);
                     return validatedSpeed;
                 }
         break;
 
         default:
             validatedSpeed = 0;
-        return validatedSpeed;
+        return validatedSpeed/1048576.0f;
         break;
     }
 }
