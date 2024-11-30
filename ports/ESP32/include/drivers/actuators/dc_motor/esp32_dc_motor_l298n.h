@@ -45,6 +45,11 @@ public:
     */
     void set_speed(BSP::motorSpeeds speed) override;
 
+    /**
+     * @brief Sets a motor's raw speed
+    */
+    void set_raw_speed(unsigned int speed) override;
+
 
 
 };

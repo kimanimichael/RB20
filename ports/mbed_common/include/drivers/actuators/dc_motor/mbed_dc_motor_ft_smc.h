@@ -25,6 +25,16 @@ public:
 
     void stop() override;
 
+    /**
+    * @brief Validate the set motor speed value
+    */
+    float validate_motor_speed(unsigned int speed);
+
+    /**
+    * @brief Sets a motor's raw speed
+    */
+    void set_raw_speed(unsigned int speed) override;
+
 private:
     PwmOut _motor_signal_pin;
     BSP::motorDirections _direction;

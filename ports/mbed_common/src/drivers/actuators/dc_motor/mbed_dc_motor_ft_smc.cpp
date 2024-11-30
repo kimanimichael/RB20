@@ -99,6 +99,59 @@ void MbedDCMotor::set_speed(const BSP::motorSpeeds speed) {
     printf("Motor speed set to %.2f\n", _pwmDuty);
 }
 
+#define MAX_CW_PWM_VALUE 88000
+#define MIN_CW_PWM_VALUE 80000
+
+#define MAX_CCW_PWM_VALUE 77
+#define MIN_CCW_PWM_VALUE 73
+
+float MbedDCMotor::validate_motor_speed(unsigned int speed) {
+    float validatedSpeed;
+    switch (_direction)
+    {
+        case BSP::motorDirections::CLOCKWISE:
+            /* code */
+                if(speed > MAX_CW_PWM_VALUE) {
+                    validatedSpeed = MAX_CW_PWM_VALUE;
+                    return validatedSpeed;
+                }
+                else if (speed < MIN_CW_PWM_VALUE) {
+                    validatedSpeed = MIN_CW_PWM_VALUE;
+                    return validatedSpeed;
+                }
+                else {
+                    validatedSpeed = static_cast<float>(speed);
+                    return validatedSpeed;
+                }
+        break;
+        case BSP::motorDirections::COUNTERCLOCKWISE:
+            /* code */
+                if(speed > MAX_CCW_PWM_VALUE) {
+                    validatedSpeed = MAX_CCW_PWM_VALUE;
+                    return validatedSpeed;
+                }
+                else if (speed < MIN_CCW_PWM_VALUE) {
+                    validatedSpeed = MIN_CCW_PWM_VALUE;
+                    return validatedSpeed;
+                }
+                else {
+                    validatedSpeed = static_cast<float>(speed);
+                    return validatedSpeed;
+                }
+        break;
+
+        default:
+            validatedSpeed = 0;
+        return validatedSpeed/1048576.0f;
+        break;
+    }
+}
+
+void MbedDCMotor::set_raw_speed(unsigned int speed) {
+    _pwmDuty = validate_motor_speed(speed);
+    //    printf("Motor speed set to %u\n", _pwmDuty);
+}
+
 void MbedDCMotor::run() {
     _motor_signal_pin.write(_pwmDuty);
 }

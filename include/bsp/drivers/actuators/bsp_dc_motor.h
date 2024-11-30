@@ -54,6 +54,11 @@ public:
      * @author @MK
     */
     virtual void set_speed(BSP::motorSpeeds speed) = 0;
+
+    /**
+     * @brief Sets a motor's raw speed
+    */
+    virtual void set_raw_speed(unsigned int speed) = 0;
 };
 
 }
