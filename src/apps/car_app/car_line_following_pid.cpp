@@ -4,7 +4,7 @@ Infrared5Channel* infraredSensor;
 Infrared5Channel::detectedChannels sensorDetectedChannels;
 
 double lineError;
-PID lineFollowingPid(0.9, 3.80, 959.80);
+PID lineFollowingPid(0.9, 3.80, 1.5);
 double PIDOutput;
 
 int cornerSpeedDiff;
@@ -20,14 +20,14 @@ void carAppRun() {
     {
     case Infrared5Channel::detectedChannels::centralChannel:
         lineError = 0.0;
-        cornerSpeedDiff = 1200;
+        cornerSpeedDiff = 2000;
         break;
     case Infrared5Channel::detectedChannels::halfLeftChannel:
         lineError = -0.7;
         cornerSpeedDiff = 2000;
         break;
     case Infrared5Channel::detectedChannels::farLeftChannel:
-        lineError = -2.0;
+        lineError = -1.4;
         cornerSpeedDiff = 2000;
         break;
     case Infrared5Channel::detectedChannels::halfRightChannel:
@@ -35,14 +35,14 @@ void carAppRun() {
         cornerSpeedDiff = 2000;
         break;
     case Infrared5Channel::detectedChannels::farRightChannel:
-        lineError = 2.0;
+        lineError = 1.4;
         cornerSpeedDiff = 2000;
         break;
     default:
         break;
     }
 
-    lineFollowingPid._dt = 0.025;
+    lineFollowingPid._dt = 0.25;
     PIDOutput = lineFollowingPid.calculateOutput(0, lineError);
 
 

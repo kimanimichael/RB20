@@ -29,7 +29,7 @@ double PID::calculateOutput(double setPoint, double processVariable) {
     }
     _derivative = (_error - _previousError)/_dt;
 
-    printf("Proportional: %.2f || Integral: %.2f || Derivative: %.2f\n",_error, _integral, _derivative);
+
 
     output = _kp*_error + _ki*_integral + _kd * _derivative;
     // if (abs(output - _previousOutput) > MAX_PID_DIFF) {
@@ -43,7 +43,10 @@ double PID::calculateOutput(double setPoint, double processVariable) {
     // }
     _previousError = _error;
     _previousOutput = output;
+    printf("\n\n\n ============= PID LOGGING =============\n");
+    printf("Proportional: %.2f || Integral: %.2f || Derivative: %.2f\n",_error, _integral, _derivative);
     printf("PID D Output: %.2f\n", output);
+    printf("============= PID LOGGING ============= \n\n\n");
 
     
 
