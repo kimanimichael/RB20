@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "bsp.h"
 #include "car.h"
-#include "car_line_following.h"
-#include "kinematics.h"
+#include "car_line_following_pid.h"
+#include "kinematics_pid.h"
 #include "steering.h"
 // #include <freertos/FreeRTOS.h>
 // #include <freertos/task.h>
@@ -24,15 +24,18 @@ int main()
     //     steerCar();
     //     controlCarKinematics();
     // }
-    BSP::BSP_Delay(10000);
+    BSP::BSP_Delay(20000);
     BSP::BSPInit();
     carAppInit();
     // steerCar();
     controlCarKinematics();
+    double carPIDOutput;
     while(1) {
         carAppRun();
         // steerCar();
-        controlCarKinematics();
+
+        carPIDOutput = controlCarKinematics();
+        printf("PID Output: %.2f\n", carPIDOutput);
         BSP::BSP_Delay(100);
         // vTaskDelay(500/portTICK_PERIOD_MS);
     }

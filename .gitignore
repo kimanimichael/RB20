@@ -7,3 +7,5 @@ build /
 cmake-build-debug-gcc_arm/
 cmake_build/
 cmake_build_clion/
+cmake_build/
+cmake-build-debug/
